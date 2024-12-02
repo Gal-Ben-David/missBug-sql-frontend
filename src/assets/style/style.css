@@ -1,0 +1,15 @@
+/* FONTS */
+
+@import '../style/main.css';
+@import '../style/cmp/BugList.css';
+@import '../style/cmp/BugFilter.css';
+
+@font-face {
+    font-family: Mukta-Light;
+    src: url('../font/Mukta/Mukta-Light.ttf');
+}
+
+@font-face {
+    font-family: Mukta-Regular;
+    src: url('../font/Mukta/Mukta-Regular.ttf');
+}
