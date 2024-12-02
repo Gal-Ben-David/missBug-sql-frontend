@@ -59,7 +59,7 @@ export function BugFilter({ filterBy, onSetFilter }) {
                     <select onChange={handleLabelsChange}>
                         <option value="">Select</option>
                         <option value="critical">critical</option>
-                        <option value="need-CR">need-CR</option>
+                        <option value="need-cr">need-CR</option>
                         <option value="dev-branch">dev-branch</option>
                     </select>
                 </div>

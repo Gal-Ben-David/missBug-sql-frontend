@@ -14,8 +14,8 @@ export const bugService = {
     getPDF
 }
 
-async function query(filterBy = {}) {
-    return httpService.get(`bug`, filterBy)
+async function query(filterBy = {}, sortBy = {}) {
+    return httpService.get(`bug`, { ...filterBy, ...sortBy })
 }
 
 function getById(bugId) {

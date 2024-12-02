@@ -27,7 +27,7 @@ export function BugSort({ sortBy, onSetSort }) {
             <h2>Sort</h2>
             <div>
                 <select onChange={handleChange}>
-                    <option value="bugTitle">Title</option>
+                    <option value="name">Title</option>
                     <option value="severity">Severity</option>
                     <option value="createdAt">Created At</option>
                 </select>
