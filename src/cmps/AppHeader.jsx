@@ -1,6 +1,6 @@
 
 import { UserMsg } from './UserMsg.jsx'
-// import { LoginSignup } from '../cmps/LoginSignup.jsx'
+import { LoginSignup } from '../cmps/LoginSignup.jsx'
 import { userService } from '../services/user.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 
@@ -25,9 +25,7 @@ export function AppHeader() {
         setUser(user)
     }
 
-    useEffect(() => {
-        // component did mount when dependancy array is empty
-    }, [])
+    console.log('user', user)
 
     return (
         <header className='container'>
@@ -45,7 +43,7 @@ export function AppHeader() {
                 </section>
             ) : (
                 <section>
-                    {/* <LoginSignup onSetUser={onSetUser} /> */}
+                    <LoginSignup onSetUser={onSetUser} />
                 </section>
             )}
         </header>
