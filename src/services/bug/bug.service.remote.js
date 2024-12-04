@@ -27,8 +27,8 @@ async function remove(bugId) {
 }
 async function save(bug) {
     var savedBug
-    if (bug._id) {
-        savedBug = await httpService.put(`bug/${bug._id}`, bug)
+    if (bug.id) {
+        savedBug = await httpService.put(`bug/${bug.id}`, bug)
     } else {
         savedBug = await httpService.post('bug', bug)
     }

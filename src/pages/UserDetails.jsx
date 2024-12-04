@@ -13,16 +13,22 @@ export function UserDetails() {
     const { userId } = useParams()
 
     useEffect(() => {
-        userService.getById(userId)
-            .then(user => {
-                setUser(user)
-                bugService.query()
-                    .then(bugs => setBugs(bugs.filter(bug => bug.creator._id === userId)))
-            })
-            .catch(err => {
-                showErrorMsg('Cannot load user')
-            })
+        fetchData()
     }, [])
+
+    async function fetchData() {
+        try {
+            const fetchedUser = await userService.getById(userId)
+            setUser(fetchedUser)
+
+            const fetchedBugs = await bugService.query()
+            setBugs(fetchedBugs.filter(bug => bug.creatorId === +userId))
+
+        } catch (err) {
+            console.error('Cannot load user', err)
+            showErrorMsg('Cannot load user')
+        }
+    }
 
     if (!user) return <h1>loadings....</h1>
     return (
@@ -30,7 +36,7 @@ export function UserDetails() {
             <h3>User Details 👤</h3>
             <h4>{user.fullname}</h4>
             <h5>id: {user._id}</h5>
-            <h5>{bugs ? 'User Bugs' : 'No Bugs'}</h5>
+            <h5>{bugs && bugs.length > 0 ? 'User Bugs' : 'No Bugs'}</h5>
             <pre>
                 {bugs && bugs.length !== 0 &&
                     <BugList bugs={bugs} />

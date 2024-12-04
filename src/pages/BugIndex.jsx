@@ -50,12 +50,13 @@ export function BugIndex() {
     }
 
     function onRemoveBug(bugId) {
+        setBugs((prevBugs) => prevBugs.filter(bug => bug._id !== bugId))
+
+        // Perform the server operation
         bugService
             .remove(bugId)
             .then(() => {
                 console.log('Deleted Successfully!')
-                const bugsToUpdate = bugs.filter((bug) => bug._id !== bugId)
-                setBugs(bugsToUpdate)
                 showSuccessMsg('Bug removed')
             })
             .catch((err) => {
