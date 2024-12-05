@@ -49,59 +49,50 @@ export function BugIndex() {
         })
     }
 
-    function onRemoveBug(bugId) {
-        setBugs((prevBugs) => prevBugs.filter(bug => bug._id !== bugId))
-
-        // Perform the server operation
-        bugService
-            .remove(bugId)
-            .then(() => {
-                console.log('Deleted Successfully!')
-                showSuccessMsg('Bug removed')
-            })
-            .catch((err) => {
-                console.log('Error from onRemoveBug ->', err)
-                showErrorMsg('Cannot remove bug')
-            })
+    async function onRemoveBug(bugId) {
+        setBugs((prevBugs) => prevBugs.filter(bug => bug.id !== bugId))
+        try {
+            await bugService.remove(bugId)
+            console.log('Deleted Successfully!')
+            showSuccessMsg('Bug removed')
+        } catch (err) {
+            console.log('Error from onRemoveBug ->', err)
+            showErrorMsg('Cannot remove bug')
+        }
     }
 
-    function onAddBug() {
+    async function onAddBug() {
         const bug = {
             title: prompt('Bug title?'),
             description: prompt('Bug description?'),
             severity: +prompt('Bug severity?'),
             labels: prompt('Enter labels separated by commas').split(',')
         }
-        bugService
-            .save(bug)
-            .then((savedBug) => {
-                console.log('Added Bug', savedBug)
-                setBugs([...bugs, savedBug])
-                showSuccessMsg('Bug added')
-            })
-            .catch((err) => {
-                console.log('Error from onAddBug ->', err)
-                showErrorMsg('Cannot add bug')
-            })
+        try {
+            const savedBug = await bugService.save(bug)
+            console.log('Added Bug', savedBug)
+            setBugs([...bugs, savedBug])
+            showSuccessMsg('Bug added')
+        } catch (err) {
+            console.log('Error from onAddBug ->', err)
+            showErrorMsg('Cannot add bug')
+        }
     }
 
-    function onEditBug(bug) {
+    async function onEditBug(bug) {
         const severity = +prompt('New severity?')
         const bugToSave = { ...bug, severity }
-        bugService
-            .save(bugToSave)
-            .then((savedBug) => {
-                console.log('Updated Bug:', savedBug)
-                const bugsToUpdate = bugs.map((currBug) =>
-                    currBug._id === savedBug._id ? savedBug : currBug
-                )
-                setBugs(bugsToUpdate)
-                showSuccessMsg('Bug updated')
-            })
-            .catch((err) => {
-                console.log('Error from onEditBug ->', err)
-                showErrorMsg('Cannot update bug')
-            })
+        try {
+            const savedBug = await bugService.save(bugToSave)
+
+            const bugsToUpdate = bugs.map((currBug) =>
+                currBug.id === savedBug.id ? savedBug : currBug
+            )
+            setBugs(bugsToUpdate)
+        } catch (err) {
+            console.error('Error from onEditBug ->', err)
+            showErrorMsg('Cannot update bug')
+        }
     }
 
     return (

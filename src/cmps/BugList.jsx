@@ -6,7 +6,6 @@ import { userService } from '../services/user.service.js'
 export function BugList({ bugs, onRemoveBug, onEditBug }) {
 
     const user = userService.getLoggedinUser()
-    console.log('LoggedinUser', user)
 
     function isCreator(bug) {
         if (!user) return false

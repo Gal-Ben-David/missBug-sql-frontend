@@ -25,8 +25,6 @@ export function AppHeader() {
         setUser(user)
     }
 
-    console.log('user', user)
-
     return (
         <header className='container'>
             <UserMsg />
